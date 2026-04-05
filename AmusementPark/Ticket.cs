@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace AmusementPark
+{
+    public class Ticket
+    {
+        public string Id { get; set; }
+        public int Profile_id { get; set; }
+        public int Price_id { get; set; }
+        public DateTime Start_Time { get; set; }
+        public DateTime End_Time { get; set; }
+        public Profile Profile { get; set; }
+
+        //public Price Price { get; set; }
+
+        public Payment Payment { get; set; }
+        //public ICollection<Visit> Visits { get; set; }
+    }
+}

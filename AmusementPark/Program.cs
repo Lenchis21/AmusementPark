@@ -36,7 +36,7 @@ namespace AmusementPark
 
                 foreach (User u in users)
                 {
-                    Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
+                    //Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
                 }
             }
             Console.Read();
