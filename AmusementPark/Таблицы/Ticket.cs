@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AmusementPark
+namespace AmusementPark.Таблицы
 {
     public class Ticket
     {

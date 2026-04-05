@@ -1,4 +1,4 @@
-﻿using AmusementPark;
+﻿using AmusementPark.Таблицы;
 using System;
 using System.Linq;
 

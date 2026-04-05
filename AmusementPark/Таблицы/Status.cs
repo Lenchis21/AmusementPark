@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AmusementPark
+namespace AmusementPark.Таблицы
 {
-    public class Role
+    public class Status
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        ICollection<User> Users;
+        public ICollection<Price> Prices;
 
     }
 }
