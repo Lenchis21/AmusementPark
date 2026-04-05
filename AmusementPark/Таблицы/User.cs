@@ -17,9 +17,9 @@ namespace AmusementPark.Таблицы
 
         public Role Role;
 
+        public int RoleId { get; set; }
 
-
-
+        public Profile Profile { get; set; }
 
     }
 

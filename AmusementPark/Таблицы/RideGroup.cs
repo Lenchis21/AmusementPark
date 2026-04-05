@@ -9,6 +9,7 @@ namespace AmusementPark.Таблицы
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Ride> Riders;
+        public ICollection<Ride> Rides { get; set; }
     }
+
 }

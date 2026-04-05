@@ -12,6 +12,6 @@ namespace AmusementPark.Таблицы
         public DateTime Exit_Time { get; set; }
         public Ticket Ticket { get; set; }
 
-        public ICollection<RideVisit> Ride_Visit;
+        public ICollection<RideVisit> RideVisits { get; set; }
     }
 }
