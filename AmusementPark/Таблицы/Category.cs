@@ -10,5 +10,10 @@ namespace AmusementPark.Таблицы
         public string Name { get; set; }    
 
         public ICollection<Price> Prices { get; set; }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

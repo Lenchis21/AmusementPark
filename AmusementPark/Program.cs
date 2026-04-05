@@ -1,5 +1,7 @@
 ﻿using AmusementPark.Таблицы;
+using Microsoft.EntityFrameworkCore;
 using System;
+
 using System.Linq;
 
 namespace AmusementPark
@@ -9,37 +11,13 @@ namespace AmusementPark
 
         public static void Main(string[] args)
         {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                // создаем два объекта User
-                //User user1 = new User { Name = "Tom", Age = 33 };
-                //User user2 = new User { Name = "Alice", Age = 26 };
+            var options = new DbContextOptionsBuilder<ApplicationContext>()
+                 .UseSqlite("Filename=../../../AmusementPark.db")
+                 .Options;
 
-                // добавляем их в бд
-                //db.Users.Add(user1);
-                //db.Users.Add(user2);
-                //db.SaveChanges();
-                //Console.WriteLine("Объекты успешно сохранены");
+            using var db = new ApplicationContext(options);
 
-                // получаем объекты из бд и выводим на консоль
-                var users = db.Users.ToList();
-                db.Users.RemoveRange(users);
-                
-                // Сохраняем изменения
-                db.SaveChanges();
-                Console.WriteLine("База данных очищена.");
-
-
-                var remainingUsers = db.Users.ToList();
-
-                Console.WriteLine($"Количество объектов в БД после удаления: {remainingUsers.Count}");
-
-                foreach (User u in users)
-                {
-                    //Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
-                }
-            }
-            Console.Read();
+            db.Database.EnsureCreated();
         }
     }
 }
