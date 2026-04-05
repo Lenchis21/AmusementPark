@@ -23,7 +23,17 @@ namespace AmusementPark
 
                 // получаем объекты из бд и выводим на консоль
                 var users = db.Users.ToList();
-                Console.WriteLine("Список объектов:");
+                db.Users.RemoveRange(users);
+                
+                // Сохраняем изменения
+                db.SaveChanges();
+                Console.WriteLine("База данных очищена.");
+
+
+                var remainingUsers = db.Users.ToList();
+
+                Console.WriteLine($"Количество объектов в БД после удаления: {remainingUsers.Count}");
+
                 foreach (User u in users)
                 {
                     Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
