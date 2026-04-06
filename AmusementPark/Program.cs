@@ -74,9 +74,10 @@ namespace AmusementPark
                 Console.WriteLine("Название не может быть пустым.");
                 return;
             }
-            db.Role.Add(new Role { Name = name });
+            var role = new Role { Name = name };
+            db.Role.Add(role);
             db.SaveChanges();
-            Console.WriteLine("Роль добавлена.");
+            Console.WriteLine($"Роль добавлена. ID: {role.Id}");
         }
 
         static void AddUser(ApplicationContext db)
@@ -88,7 +89,6 @@ namespace AmusementPark
                 Console.WriteLine("Email не может быть пустым.");
                 return;
             }
-
             Console.Write("Пароль: ");
             string? password = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(password))
@@ -96,7 +96,6 @@ namespace AmusementPark
                 Console.WriteLine("Пароль не может быть пустым.");
                 return;
             }
-
             Console.Write("ID роли: ");
             if (!int.TryParse(Console.ReadLine(), out int roleId))
             {
@@ -104,15 +103,23 @@ namespace AmusementPark
                 return;
             }
 
-            db.Users.Add(new User
+            var role = db.Role.Find(roleId);
+            if (role == null)
+            {
+                Console.WriteLine("Роль с таким ID не найдена.");
+                return;
+            }
+
+            var user = new User
             {
                 Email = email,
                 Password = password,
                 Date_Created = DateTime.Now,
                 RoleId = roleId
-            });
+            };
+            db.Users.Add(user);
             db.SaveChanges();
-            Console.WriteLine("Пользователь добавлен.");
+            Console.WriteLine($"Пользователь добавлен. ID: {user.Id}");
         }
 
         static void AddCategory(ApplicationContext db)
@@ -124,9 +131,10 @@ namespace AmusementPark
                 Console.WriteLine("Название не может быть пустым.");
                 return;
             }
-            db.Category.Add(new Category { Name = name });
+            var cat = new Category { Name = name };
+            db.Category.Add(cat);
             db.SaveChanges();
-            Console.WriteLine("Категория добавлена.");
+            Console.WriteLine($"Категория добавлена. ID: {cat.Id}");
         }
 
         static void AddStatus(ApplicationContext db)
@@ -138,9 +146,10 @@ namespace AmusementPark
                 Console.WriteLine("Название не может быть пустым.");
                 return;
             }
-            db.Status.Add(new Status { Name = name });
+            var status = new Status { Name = name };
+            db.Status.Add(status);
             db.SaveChanges();
-            Console.WriteLine("Статус добавлен.");
+            Console.WriteLine($"Статус добавлен. ID: {status.Id}");
         }
 
         static void AddPrice(ApplicationContext db)
@@ -151,14 +160,12 @@ namespace AmusementPark
                 Console.WriteLine("Ошибка: введите число.");
                 return;
             }
-
             Console.Write("ID категории: ");
             if (!int.TryParse(Console.ReadLine(), out int catId))
             {
                 Console.WriteLine("Ошибка: введите число.");
                 return;
             }
-
             Console.Write("Сумма: ");
             if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
@@ -166,14 +173,26 @@ namespace AmusementPark
                 return;
             }
 
-            db.Price.Add(new Price
+            if (db.Status.Find(statusId) == null)
+            {
+                Console.WriteLine("Статус не найден.");
+                return;
+            }
+            if (db.Category.Find(catId) == null)
+            {
+                Console.WriteLine("Категория не найдена.");
+                return;
+            }
+
+            var price = new Price
             {
                 Status_Id = statusId,
                 Category_Id = catId,
                 Amount = amount
-            });
+            };
+            db.Price.Add(price);
             db.SaveChanges();
-            Console.WriteLine("Цена добавлена.");
+            Console.WriteLine($"Цена добавлена. ID: {price.Id}");
         }
 
         static void AddProfile(ApplicationContext db)
@@ -182,6 +201,12 @@ namespace AmusementPark
             if (!int.TryParse(Console.ReadLine(), out int userId))
             {
                 Console.WriteLine("Ошибка: введите число.");
+                return;
+            }
+
+            if (db.Users.Find(userId) == null)
+            {
+                Console.WriteLine("Пользователь не найден.");
                 return;
             }
 
@@ -195,20 +220,20 @@ namespace AmusementPark
                 Console.WriteLine("Ошибка: неверный формат даты.");
                 return;
             }
-
             Console.Write("Телефон: ");
             string? phone = Console.ReadLine() ?? "";
 
-            db.Profile.Add(new Profile
+            var profile = new Profile
             {
                 User_Id = userId,
                 First_Name = firstName,
                 Last_Name = lastName,
                 Birth_Date = birth,
                 Phone = phone
-            });
+            };
+            db.Profile.Add(profile);
             db.SaveChanges();
-            Console.WriteLine("Профиль создан.");
+            Console.WriteLine($"Профиль создан. ID: {profile.Id}");
         }
 
         static void AddRide(ApplicationContext db)
@@ -218,6 +243,20 @@ namespace AmusementPark
             if (string.IsNullOrWhiteSpace(name))
             {
                 Console.WriteLine("Название не может быть пустым.");
+                return;
+            }
+
+            Console.Write("ID группы аттракционов: ");
+            if (!int.TryParse(Console.ReadLine(), out int groupId))
+            {
+                Console.WriteLine("Ошибка: введите число.");
+                return;
+            }
+
+            // Проверка существования группы
+            if (db.RideGroup.Find(groupId) == null)
+            {
+                Console.WriteLine("Группа аттракционов не найдена.");
                 return;
             }
 
@@ -235,14 +274,16 @@ namespace AmusementPark
                 return;
             }
 
-            db.Ride.Add(new Ride
+            var ride = new Ride
             {
                 Name = name,
+                Group_id = groupId,
                 Min_Age = minAge,
                 Duration_Minuts = duration
-            });
+            };
+            db.Ride.Add(ride);
             db.SaveChanges();
-            Console.WriteLine("Аттракцион добавлен.");
+            Console.WriteLine($"Аттракцион добавлен. ID: {ride.Id}");
         }
 
         static void SellTicket(ApplicationContext db)
@@ -258,6 +299,20 @@ namespace AmusementPark
             if (!int.TryParse(Console.ReadLine(), out int priceId))
             {
                 Console.WriteLine("Ошибка: введите число.");
+                return;
+            }
+
+            var profile = db.Profile.Find(profileId);
+            if (profile == null)
+            {
+                Console.WriteLine("Профиль не найден.");
+                return;
+            }
+
+            var price = db.Price.Find(priceId);
+            if (price == null)
+            {
+                Console.WriteLine("Цена не найдена.");
                 return;
             }
 
@@ -277,25 +332,17 @@ namespace AmusementPark
 
             var ticket = new Ticket
             {
-                // Id не указываем — база данных сама присвоит (автоинкремент)
                 Profile_id = profileId,
                 Price_id = priceId,
                 Start_Time = start,
                 End_Time = end
             };
             db.Ticket.Add(ticket);
-            db.SaveChanges();   // после сохранения ticket.Id будет заполнен
-
-            var price = db.Price.Find(priceId);
-            if (price == null)
-            {
-                Console.WriteLine("Цена не найдена!");
-                return;
-            }
+            db.SaveChanges();
 
             db.Payment.Add(new Payment
             {
-                Ticket_Id = ticket.Id,   // теперь ticket.Id — int
+                Ticket_Id = ticket.Id,
                 Amount = price.Amount,
                 Payment_Date = DateTime.Now
             });
@@ -306,11 +353,10 @@ namespace AmusementPark
 
         static void RegisterVisit(ApplicationContext db)
         {
-            Console.Write("ID билета (GUID): ");
-            string? input = Console.ReadLine();
-            if (!Guid.TryParse(input, out Guid ticketId))
+            Console.Write("ID билета: ");
+            if (!int.TryParse(Console.ReadLine(), out int ticketId))
             {
-                Console.WriteLine("Ошибка: неверный GUID билета.");
+                Console.WriteLine("Ошибка: неверный ID билета.");
                 return;
             }
 
