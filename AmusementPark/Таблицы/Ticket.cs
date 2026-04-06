@@ -12,9 +12,7 @@ namespace AmusementPark.Таблицы
         public DateTime Start_Time { get; set; }
         public DateTime End_Time { get; set; }
         public Profile Profile { get; set; }
-
         public Price Price { get; set; }
-
         public Payment Payment { get; set; }
         public ICollection<Visit> Visits { get; set; }
     }
