@@ -95,11 +95,6 @@ namespace AmusementPark
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Prices)
                 .HasForeignKey(p => p.Category_Id);
-
-            // Уникальные ограничения и индексы (опционально)
-            modelBuilder.Entity<Ticket>()
-                .HasIndex(t => t.Id)
-                .IsUnique();
         }
     }
 }

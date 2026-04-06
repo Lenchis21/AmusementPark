@@ -6,7 +6,7 @@ namespace AmusementPark.Таблицы
 {
     public class Ticket
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public int Profile_id { get; set; }
         public int Price_id { get; set; }
         public DateTime Start_Time { get; set; }
