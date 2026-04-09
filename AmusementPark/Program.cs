@@ -9,12 +9,34 @@ namespace AmusementPark
     {
         public static void Main(string[] args)
         {
+            // Настройка подключения к PostgreSQL
             var options = new DbContextOptionsBuilder<ApplicationContext>()
-                .UseSqlite("Filename=../../../AmusementPark.db")
+                .UseNpgsql("Host=localhost;Port=5433;Database=AmusementParkDB;Username=postgres;Password=admin")
                 .Options;
 
-            using var db = new ApplicationContext(options);
-            db.Database.EnsureCreated();
+            // Создаём контекст БЕЗ using, чтобы он жил всё время работы программы
+            ApplicationContext db;
+            try
+            {
+                db = new ApplicationContext(options);
+
+                // Для чистого старта: удаляем старую БД и создаём новую (Id начнутся с 1)
+                // Если не хотите терять данные при каждом запуске, закомментируйте следующую строку
+                db.Database.EnsureDeleted();
+
+                // Создаём БД и все таблицы, если их нет
+                db.Database.EnsureCreated();
+
+                Console.WriteLine("База данных PostgreSQL готова к работе.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка подключения к PostgreSQL: {ex.Message}");
+                Console.WriteLine("Проверьте, запущен ли сервер PostgreSQL и правильность пароля.");
+                Console.WriteLine("Нажмите любую клавишу для выхода...");
+                Console.ReadKey();
+                return;
+            }
 
             bool exit = false;
             while (!exit)
