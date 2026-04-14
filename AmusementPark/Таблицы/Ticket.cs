@@ -11,9 +11,9 @@ namespace AmusementPark.Таблицы
         public int Price_id { get; set; }
         public DateTime Start_Time { get; set; }
         public DateTime End_Time { get; set; }
-        public Profile Profile { get; set; }
-        public Price Price { get; set; }
-        public Payment Payment { get; set; }
-        public ICollection<Visit> Visits { get; set; }
+        public Profile Profile { get; set; } = null!;
+        public Price Price { get; set; } = null!;
+        public Payment? Payment { get; set; }   // может быть null, если не оплачен? Но у вас связь один-к-одному, обычно Payment обязателен. Лучше сделать null! или оставить как есть, но добавить = null!.
+        public ICollection<Visit> Visits { get; set; } = new List<Visit>();
     }
 }

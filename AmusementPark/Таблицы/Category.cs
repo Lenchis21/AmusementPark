@@ -7,13 +7,7 @@ namespace AmusementPark.Таблицы
     public class Category
     {
         public int Id { get; set; }
-        public string Name { get; set; }    
-
-        public ICollection<Price> Prices { get; set; }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        public required string Name { get; set; }
+        public ICollection<Price> Prices { get; set; } = new List<Price>();
     }
 }

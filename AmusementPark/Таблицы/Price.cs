@@ -7,13 +7,11 @@ namespace AmusementPark.Таблицы
     public class Price
     {
         public int Id { get; set; }
-        
         public int Status_Id { get; set; }
         public int Category_Id { get; set; }
-        public Decimal Amount { get; set; }
-        public  Status  Status { get; set; }
-        public Category Category { get; set; }
-
-        public ICollection<Ticket> Tickets;
+        public decimal Amount { get; set; }
+        public Status Status { get; set; } = null!;
+        public Category Category { get; set; } = null!;
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
 }

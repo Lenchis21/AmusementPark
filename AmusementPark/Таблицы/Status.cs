@@ -7,8 +7,7 @@ namespace AmusementPark.Таблицы
     public class Status
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public ICollection<Price> Prices;
-
+        public required string Name { get; set; }
+        public ICollection<Price> Prices { get; set; } = new List<Price>();
     }
 }

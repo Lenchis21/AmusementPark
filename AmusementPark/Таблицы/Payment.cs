@@ -8,9 +8,8 @@ namespace AmusementPark.Таблицы
     {
         public int Id { get; set; }
         public int Ticket_Id { get; set; }
-        public Decimal Amount { get; set; }
+        public decimal Amount { get; set; }
         public DateTime Payment_Date { get; set; }
-
-        public Ticket Ticket { get; set; }
+        public Ticket Ticket { get; set; } = null!;
     }
 }

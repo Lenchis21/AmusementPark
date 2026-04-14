@@ -7,9 +7,8 @@ namespace AmusementPark.Таблицы
     public class RideGroup
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-
-        public ICollection<Ride> Rides { get; set; }
+        public required string Name { get; set; }
+        public ICollection<Ride> Rides { get; set; } = new List<Ride>();
     }
 
 }

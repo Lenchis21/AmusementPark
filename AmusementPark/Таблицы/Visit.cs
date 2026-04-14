@@ -10,8 +10,7 @@ namespace AmusementPark.Таблицы
         public int Ticket_id { get; set; }
         public DateTime Entry_Time { get; set; }
         public DateTime Exit_Time { get; set; }
-        public Ticket Ticket { get; set; }
-
-        public ICollection<RideVisit> RideVisits { get; set; }
+        public Ticket Ticket { get; set; } = null!;
+        public ICollection<RideVisit> RideVisits { get; set; } = new List<RideVisit>();
     }
 }
